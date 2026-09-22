@@ -1,4 +1,3 @@
-```
 import streamlit as st
 import pandas as pd
 import io
@@ -13,8 +12,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 # Konfigurasi Halaman Streamlit
 st.set_page_config(page_title="Audit Internal LSP Pertanian Presisi", page_icon="🌱", layout="wide")
 
-st.markdown("<h1>🌱 Aplikasi Audit Internal LSP Pertanian Presisi</h1>", unsafe_allow_html=True)
-st.markdown("### Instrumen Evaluasi Kesesuaian Pedoman BNSP 201 &amp; ISO 19011")
+st.markdown("<h1 style='color: #1b4332;'>🌱 Aplikasi Audit Internal LSP Pertanian Presisi</h1>", unsafe_allow_html=True)
+st.markdown("### Instrumen Evaluasi Kesesuaian Pedoman BNSP 201 & ISO 19011")
 
 # Sidebar Parameter Audit
 st.sidebar.header("📋 Parameter Audit")
@@ -28,18 +27,18 @@ ketua_lsp = st.sidebar.text_input("Ketua LSP", "Dr. Ir. Eko Murniyanto, MP.")
 if "checklists" not in st.session_state:
     st.session_state["checklists"] = {
         "Mutu": [
-            {"klausul": "PBNSP 201 - 10.6", "item": "SOP Pengendalian Dokumen &amp; Rekaman", "status": "Sesuai", "catatan": "Dokumen edisi terkini tersedia."},
-            {"klausul": "PBNSP 201 - 10.6", "item": "SOP Audit Internal &amp; Kaji Ulang Manajemen", "status": "Sesuai", "catatan": "Program &amp; SK Penunjukan 2026 lengkap."}
+            {"klausul": "PBNSP 201 - 10.6", "item": "SOP Pengendalian Dokumen & Rekaman", "status": "Sesuai", "catatan": "Dokumen edisi terkini tersedia."},
+            {"klausul": "PBNSP 201 - 10.6", "item": "SOP Audit Internal & Kaji Ulang Manajemen", "status": "Sesuai", "catatan": "Program & SK Penunjukan 2026 lengkap."}
         ],
         "Sertifikasi": [
-            {"klausul": "PBNSP 201 - 8 &amp; 9", "item": "Skema Sertifikasi &amp; Perangkat Asesmen (MUK)", "status": "Sesuai", "catatan": "MUK tersimpan dalam Brankas terkunci."},
+            {"klausul": "PBNSP 201 - 8 & 9", "item": "Skema Sertifikasi & Perangkat Asesmen (MUK)", "status": "Sesuai", "catatan": "MUK tersimpan dalam Brankas terkunci."},
             {"klausul": "PBNSP 201 - 6.4", "item": "SOP Verifikasi TUK", "status": "Minor NC", "catatan": "1 Berita Acara TUK sewaktu belum stempel basah."}
         ],
         "Administrasi": [
-            {"klausul": "PBNSP 201 - 7.1", "item": "Pengendalian Rekaman Persuratan &amp; Asesi", "status": "Observasi", "catatan": "Perlu penambahan folder tertutup di rak."}
+            {"klausul": "PBNSP 201 - 7.1", "item": "Pengendalian Rekaman Persuratan & Asesi", "status": "Observasi", "catatan": "Perlu penambahan folder tertutup di rak."}
         ],
         "Keuangan": [
-            {"klausul": "PBNSP 201 &amp; 202", "item": "Tata Kelola &amp; Pelaporan Keuangan", "status": "Sesuai", "catatan": "Pencatatan keuangan tertib &amp; transparan."}
+            {"klausul": "PBNSP 201 & 202", "item": "Tata Kelola & Pelaporan Keuangan", "status": "Sesuai", "catatan": "Pencatatan keuangan tertib & transparan."}
         ]
     }
 
@@ -49,7 +48,7 @@ with tab1:
     all_items = [it for dept in st.session_state["checklists"].values() for it in dept]
     total = len(all_items)
     sesuai = sum(1 for x in all_items if x["status"] == "Sesuai")
-    score = round((sesuai / total) * 100, 1) if total &gt; 0 else 0
+    score = round((sesuai / total) * 100, 1) if total > 0 else 0
     
     col1, col2, col3 = st.columns(3)
     col1.metric("Compliance Score", f"{score}%")
@@ -87,7 +86,7 @@ with tab3:
             for it in list_it:
                 rows.append([Paragraph(dept, styles['Normal']), Paragraph(it["item"], styles['Normal']), Paragraph(it["status"], styles['Normal']), Paragraph(it["catatan"], styles['Normal'])])
         
-        t = Table(rows, colWidths=[100, 180, 80, 180])
+        t = Table(rows, colWidths=[90, 150, 100, 200])
         t.setStyle(TableStyle([('GRID', (0,0), (-1,-1), 0.5, colors.grey), ('BACKGROUND', (0,0), (-1,0), colors.lightgrey)]))
         story.append(t)
         doc.build(story)
@@ -95,5 +94,3 @@ with tab3:
         return buf.getvalue()
 
     st.download_button("📥 Unduh Laporan PDF", data=make_pdf(), file_name="Laporan_Audit_LSP_Pertanian_Presisi.pdf", mime="application/pdf")
-
-```
